@@ -23,8 +23,9 @@ export interface QuizQuestion {
 
 export interface UploadedFile {
   name: string;
-  type: 'pdf' | 'pptx';
+  type: 'pdf';
   content: string;
+  fileData?: ArrayBuffer;
   pageCount?: number;
   title?: string;
 }

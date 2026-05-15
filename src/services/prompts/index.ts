@@ -47,6 +47,7 @@ export function getTutorSystemPrompt(settings: TutorSettings, fileContent?: stri
 6. 使用短句，保持简洁友好
 7. 使用中文回答，但专业术语可以保留英文
 8. 适当使用表情符号增加亲和力，但不要过度
+9. 选项辅助规则：在追问或引导时，如果问题适合用选项帮助学生聚焦思考（如概念辨析、原因判断、步骤排序），可以给出2-3个选项（A/B/C）让学生选择。格式示例："你觉得原因是哪个？\nA. ...\nB. ...\nC. ..."。但以下情况不要给选项：开放性问题、需要学生自己表达的问题、已经有明确方向的问题。选项要具有迷惑性，不要让正确答案过于明显。
 
 ${guidanceLevelPrompts[settings.guidanceLevel]}
 

@@ -25,11 +25,11 @@ export default function QuizPanel() {
   const shortAnswerCount = questions.filter(q => q.type === 'short-answer').length;
 
   return (
-    <Card variant="glass" className="flex-1 flex flex-col min-h-0">
-      <div className="flex items-center justify-between mb-4">
-        <div className="flex items-center gap-3">
-          <h2 className="text-xl font-semibold text-text flex items-center gap-2">
-            <BookOpen className="w-5 h-5 text-accent" />
+    <Card variant="glass" className="h-full flex flex-col p-4 min-h-0">
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2">
+          <h2 className="text-lg font-semibold text-text flex items-center gap-2">
+            <BookOpen className="w-4 h-4 text-accent" />
             练习题
           </h2>
           {state.uploadedFile && (
@@ -52,29 +52,29 @@ export default function QuizPanel() {
         {questions.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center py-8">
             <motion.div
-              className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mb-4"
+              className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-3"
               whileHover={{ scale: 1.1 }}
             >
-              <BookOpen className="w-8 h-8 text-accent" />
+              <BookOpen className="w-6 h-6 text-accent" />
             </motion.div>
-            <h3 className="text-lg font-medium text-text mb-2">开始练习</h3>
-            <p className="text-text/60 text-sm mb-6 max-w-xs">
-              根据上传的学习材料，AI将为你生成针对性的练习题
+            <h3 className="text-base font-medium text-text mb-1">开始练习</h3>
+            <p className="text-text/60 text-xs mb-4 max-w-xs">
+              AI根据学习材料生成针对性练习题
             </p>
-            <Button onClick={generateQuiz} isLoading={isGenerating}>
-              <ListChecks className="w-4 h-4 mr-2" />
+            <Button onClick={generateQuiz} isLoading={isGenerating} size="sm">
+              <ListChecks className="w-4 h-4 mr-1" />
               生成练习题
             </Button>
           </div>
         ) : (
           <>
             {/* 统计信息 */}
-            <div className="bg-accent/5 rounded-xl p-4">
-              <div className="flex items-center justify-between mb-3">
-                <div className="flex items-center gap-4">
+            <div className="bg-accent/5 rounded-lg p-3">
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3">
                   <div className="flex items-center gap-1.5">
-                    <ListChecks className="w-4 h-4 text-accent" />
-                    <span className="text-sm font-medium text-text">共 {questions.length} 题</span>
+                    <ListChecks className="w-3.5 h-3.5 text-accent" />
+                    <span className="text-xs font-medium text-text">共 {questions.length} 题</span>
                   </div>
                   <div className="flex items-center gap-2 text-xs text-text/60">
                     <span className="flex items-center gap-1">

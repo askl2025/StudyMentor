@@ -51,10 +51,10 @@ export default function TutorChat() {
   const isLastMessageStreaming = isStreaming && messages.length > 0 && messages[messages.length - 1].role === 'assistant';
 
   return (
-    <Card variant="glass" className="h-full flex flex-col">
-      <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold text-text flex items-center gap-2">
-          <Bot className="w-5 h-5 text-accent" />
+    <Card variant="glass" className="h-full flex flex-col p-4">
+      <div className="flex items-center justify-between mb-3">
+        <h2 className="text-lg font-semibold text-text flex items-center gap-2">
+          <Bot className="w-4 h-4 text-accent" />
           AI导师
         </h2>
         {state.uploadedFile && (
@@ -65,17 +65,17 @@ export default function TutorChat() {
         )}
       </div>
 
-      <div className="flex-1 overflow-y-auto scrollbar-thin mb-4 space-y-4 min-h-0">
+      <div className="flex-1 overflow-y-auto scrollbar-thin mb-3 space-y-3 min-h-0">
         {messages.length === 0 ? (
           <div className="h-full flex flex-col items-center justify-center text-center">
             <motion.div
-              className="w-16 h-16 rounded-full bg-accent/10 flex items-center justify-center mb-4"
+              className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-3"
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <Bot className="w-8 h-8 text-accent" />
+              <Bot className="w-6 h-6 text-accent" />
             </motion.div>
-            <h3 className="text-lg font-medium text-text mb-2">你好！我是你的AI导师</h3>
+            <h3 className="text-base font-medium text-text mb-1">你好！我是你的AI导师</h3>
             <p className="text-text/60 text-sm max-w-xs">
               {state.uploadedFile
                 ? '我已经阅读了你的学习材料，有什么问题都可以问我。我会引导你思考，而不是直接告诉你答案。'
@@ -199,12 +199,6 @@ export default function TutorChat() {
         >
           <Send className="w-5 h-5" />
         </Button>
-      </div>
-
-      <div className="mt-2 text-center">
-        <p className="text-xs text-text/40">
-          AI导师会引导你思考，而不是直接给出答案
-        </p>
       </div>
     </Card>
   );
