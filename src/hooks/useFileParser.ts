@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import type { UploadedFile } from '../types';
+import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
@@ -41,7 +42,7 @@ export function useFileParser() {
     setProgress(10);
 
     const pdfjsLib = await import('pdfjs-dist');
-    pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`;
+    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
     setProgress(20);
 
