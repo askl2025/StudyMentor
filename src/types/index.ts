@@ -29,9 +29,24 @@ export interface UploadedFile {
   title?: string;
 }
 
+export type ModelProvider =
+  | 'claude'
+  | 'openai'
+  | 'gemini'
+  | 'deepseek'
+  | 'kimi'
+  | 'glm'
+  | 'custom';
+
+export interface CustomModelConfig {
+  baseUrl: string;
+  modelName: string;
+}
+
 export interface TutorSettings {
   apiKey: string;
-  provider: 'claude' | 'kimi';
+  provider: ModelProvider;
+  customConfig?: CustomModelConfig;
   guidanceLevel: 'gentle' | 'moderate' | 'strict';
 }
 

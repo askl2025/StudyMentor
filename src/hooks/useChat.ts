@@ -71,7 +71,8 @@ export function useChat() {
           dispatch({ type: 'SET_LOADING', payload: false });
           setIsStreaming(false);
         },
-      }
+      },
+      state.settings.customConfig
     );
   }, [state.settings, state.uploadedFile, state.messages, dispatch]);
 

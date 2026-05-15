@@ -81,7 +81,8 @@ export function useQuiz() {
           alert(`习题生成失败: ${error}`);
           dispatch({ type: 'SET_GENERATING_QUIZ', payload: false });
         },
-      }
+      },
+      state.settings.customConfig
     );
   }, [state.settings, state.uploadedFile, dispatch]);
 
@@ -142,7 +143,8 @@ export function useQuiz() {
         onError: (error) => {
           console.error('获取点评失败:', error);
         },
-      }
+      },
+      state.settings.customConfig
     );
   }, [state.quizQuestions, state.settings, dispatch]);
 
