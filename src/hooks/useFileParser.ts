@@ -42,9 +42,10 @@ export function useFileParser() {
     setProgress(10);
 
     const arrayBuffer = await file.arrayBuffer();
+    const bufferCopy = arrayBuffer.slice(0);
     setProgress(20);
 
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+    const pdf = await pdfjsLib.getDocument({ data: bufferCopy }).promise;
     setProgress(30);
 
     let fullText = '';
