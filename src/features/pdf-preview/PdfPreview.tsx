@@ -2,7 +2,10 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, FileText } from 'lucide-react';
 import Card from '../../components/ui/Card';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+import * as pdfjsLib from 'pdfjs-dist';
+import workerUrl from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
 
 interface PdfPreviewProps {
   fileData: ArrayBuffer;
@@ -21,9 +24,6 @@ export default function PdfPreview({ fileData, fileName }: PdfPreviewProps) {
     let cancelled = false;
 
     const loadPdf = async () => {
-      const pdfjsLib = await import('pdfjs-dist');
-      pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
       const doc = await pdfjsLib.getDocument({ data: fileData.slice(0) }).promise;
       if (cancelled) return;
 
@@ -41,23 +41,27 @@ export default function PdfPreview({ fileData, fileName }: PdfPreviewProps) {
 
     setRendering(true);
 
-    const page = await pdfDoc.getPage(pageNum);
-    const container = containerRef.current;
-    const containerWidth = container.clientWidth - 32;
+    try {
+      const page = await pdfDoc.getPage(pageNum);
+      const container = containerRef.current;
+      const containerWidth = container.clientWidth - 32;
 
-    const viewport = page.getViewport({ scale: 1 });
-    const scale = containerWidth / viewport.width;
-    const scaledViewport = page.getViewport({ scale });
+      const viewport = page.getViewport({ scale: 1 });
+      const scale = containerWidth / viewport.width;
+      const scaledViewport = page.getViewport({ scale });
 
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d')!;
-    canvas.height = scaledViewport.height;
-    canvas.width = scaledViewport.width;
+      const canvas = canvasRef.current;
+      const context = canvas.getContext('2d')!;
+      canvas.height = scaledViewport.height;
+      canvas.width = scaledViewport.width;
 
-    await page.render({
-      canvasContext: context,
-      viewport: scaledViewport,
-    }).promise;
+      await page.render({
+        canvasContext: context,
+        viewport: scaledViewport,
+      }).promise;
+    } catch (err) {
+      console.error('PDF渲染失败:', err);
+    }
 
     setRendering(false);
   }, [pdfDoc]);
@@ -83,7 +87,7 @@ export default function PdfPreview({ fileData, fileName }: PdfPreviewProps) {
 
       <div
         ref={containerRef}
-        className="flex-1 overflow-y-auto scrollbar-thin flex justify-center bg-white/30 rounded-lg p-4 min-h-0"
+        className="flex-1 overflow-y-auto scrollbar-thin flex justify-center bg-white/30 rounded-lg p-4 min-h-0 relative"
       >
         {rendering && (
           <div className="absolute inset-0 flex items-center justify-center z-10">

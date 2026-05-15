@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import type { UploadedFile } from '../types';
+import * as pdfjsLib from 'pdfjs-dist';
 import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.min.mjs?url';
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
 
 const MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
@@ -38,14 +41,10 @@ export function useFileParser() {
   const parsePDF = async (file: File): Promise<UploadedFile> => {
     setProgress(10);
 
-    const pdfjsLib = await import('pdfjs-dist');
-    pdfjsLib.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-
+    const arrayBuffer = await file.arrayBuffer();
     setProgress(20);
 
-    const arrayBuffer = await file.arrayBuffer();
     const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
-
     setProgress(30);
 
     let fullText = '';
